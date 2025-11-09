@@ -11,6 +11,8 @@ export default function HomePage() {
   const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const [limit, setLimit] = useState<number>(4);
+
   const categories = useMemo(() => {
     const set = new Set<string>();
     umkmData.forEach((u) => {
@@ -23,13 +25,8 @@ export default function HomePage() {
     return ["All", ...Array.from(set)];
   }, []);
 
-  const displayed = useMemo(() => {
+  const filteredList = useMemo(() => {
     let list = umkmData.slice();
-
-    if (selectedPlaceId) {
-      const found = list.find((u) => u.id === selectedPlaceId);
-      return found ? [found] : [];
-    }
 
     if (selectedCategory !== "All") {
       const sel = selectedCategory.toLowerCase();
@@ -42,8 +39,16 @@ export default function HomePage() {
       );
     }
 
-    return list.sort((a, b) => (b.id ?? 0) - (a.id ?? 0)).slice(0, 4);
-  }, [selectedCategory, selectedPlaceId]);
+    return list.sort((a, b) => (b.id ?? 0) - (a.id ?? 0));
+  }, [selectedCategory]);
+
+  const displayed = useMemo(() => {
+    if (selectedPlaceId) {
+      const found = filteredList.find((u) => u.id === selectedPlaceId);
+      return found ? [found] : [];
+    }
+    return filteredList.slice(0, limit);
+  }, [filteredList, selectedPlaceId, limit]);
 
   useEffect(() => {
     setLoading(true);
@@ -54,15 +59,25 @@ export default function HomePage() {
   const handleCategorySelect = (cat: string) => {
     setSelectedPlaceId(null);
     setSelectedCategory(cat);
+    setLimit(4);
   };
+
+  const handleShowMore = () => {
+    setLimit((prev) => prev + 4);
+  };
+  const showMoreVisible =
+    !loading && !selectedPlaceId && filteredList.length > displayed.length;
 
   return (
     <main className="bg-white">
-      {/* Header */}
       <section className="flex flex-col items-center justify-center text-center py-16 bg-white">
+        {/* Headline */}
         <h1 className="text-4xl font-bold text-gray-800 mb-2">Temukan UMKM di Sekitarmu</h1>
+
+        {/* Subtext */}
         <p className="text-gray-500 mb-8">Dukung UMKM Lokal di Lingkungan Kampusmu</p>
 
+        {/* Search bar */}
         <div className="flex items-center bg-white shadow-md rounded-lg overflow-hidden border border-gray-200 w-full max-w-xl">
           <input
             type="text"
@@ -70,10 +85,7 @@ export default function HomePage() {
             placeholder="Universitas Indonesia"
             className="w-full px-3 py-3 text-gray-400 bg-transparent focus:outline-none cursor-not-allowed"
           />
-          <button
-            disabled
-            className="bg-[#204564] text-white font-semibold px-6 py-3 rounded-r-lg cursor-not-allowed"
-          >
+          <button disabled className="bg-[#204564] text-white font-semibold px-6 py-3 rounded-r-lg cursor-not-allowed">
             Cari
           </button>
         </div>
@@ -93,7 +105,7 @@ export default function HomePage() {
       <section className="container mx-auto px-4">
         <UMKMMap
           selectedCategory={selectedCategory}
-          onSelectPlace={(id) => setSelectedPlaceId(id)} 
+          onSelectPlace={(id) => setSelectedPlaceId(id)}
         />
       </section>
 
@@ -120,18 +132,10 @@ export default function HomePage() {
                 </a>
               );
             })}
-            
-            {selectedPlaceId && (
-              <button
-                onClick={() => setSelectedPlaceId(null)}
-                className="ml-2 text-sm text-gray-600 underline hover:text-[#204564]"
-              >
-                Tampilkan Semua
-              </button>
-            )}
           </div>
         </div>
 
+        {/* Cards */}
         <div
           className={`grid gap-4 sm:grid-cols-2 lg:grid-cols-4 transition-opacity duration-300 ${
             loading ? "opacity-60" : "opacity-100"
@@ -147,6 +151,19 @@ export default function HomePage() {
                 displayed.map((item) => <HomeCard key={item.id} item={item} />)
               )}
         </div>
+
+        {/* Show more */}
+        {showMoreVisible && (
+          <div className="mt-6 flex justify-center">
+            <button
+              onClick={handleShowMore}
+              className="bg-[#204564] hover:bg-[#3e607d] text-white px-6 py-2 rounded-md font-semibold transition-colors"
+              disabled={loading}
+            >
+              Tampilkan lebih banyak
+            </button>
+          </div>
+        )}
       </section>
     </main>
   );

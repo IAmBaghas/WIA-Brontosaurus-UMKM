@@ -1,9 +1,15 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import React from "react";
+import { Umkm } from "@/data/umkmData";
 
-const MapContent = dynamic(() => import("./MapContent"), {
+type UMKMMapProps = {
+  selectedCategory?: string;
+  displayedData?: Umkm[];
+  onSelectPlace?: (id: number | null) => void;
+};
+
+const SafeUMKMMap = dynamic(() => import("./MapContent"), {
   ssr: false,
   loading: () => (
     <div className="w-full max-w-5xl mx-auto my-10 h-[500px] flex items-center justify-center rounded-lg bg-gray-100 text-gray-500">
@@ -12,12 +18,12 @@ const MapContent = dynamic(() => import("./MapContent"), {
   ),
 });
 
-export default function UMKMMap({
-  selectedCategory,
-  onSelectPlace,
-}: {
-  selectedCategory?: string;
-  onSelectPlace?: (id: number) => void;
-}) {
-  return <MapContent selectedCategory={selectedCategory} onSelectPlace={onSelectPlace} />;
+export default function UMKMMap({ selectedCategory, displayedData, onSelectPlace }: UMKMMapProps) {
+  return (
+    <SafeUMKMMap
+      selectedCategory={selectedCategory}
+      displayedData={displayedData}
+      onSelectPlace={onSelectPlace}
+    />
+  );
 }

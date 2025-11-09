@@ -61,12 +61,12 @@ export default function UMKMModal({ open, onClose, item }: Props) {
           <div className="mt-4 flex flex-col md:flex-row gap-6">
             {/* gallery */}
             <div className="flex-1">
-              <div className="relative w-full h-64 md:h-80 rounded overflow-hidden bg-gray-100">
+              <div className="relative w-full h-80 md:h-[28rem] rounded overflow-hidden bg-gray-100">
                 <Image
                   src={gallery[index]}
                   alt={`${item.name} image ${index + 1}`}
                   fill
-                  className="object-cover"
+                  className="object-cover min-h-full"
                   sizes="(max-width: 768px) 600px, 800px"
                 />
 
@@ -97,7 +97,7 @@ export default function UMKMModal({ open, onClose, item }: Props) {
                   <button
                     key={i}
                     onClick={() => setIndex(i)}
-                    className={`relative h-14 w-24 rounded overflow-hidden border ${
+                    className={`relative h-20 w-24 rounded overflow-hidden border ${
                       i === index ? "border-[#204564]" : "border-gray-200"
                     }`}
                     aria-label={`Thumbnail ${i + 1}`}

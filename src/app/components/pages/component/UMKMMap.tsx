@@ -1,9 +1,10 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import React from "react";
 
-const SafeUMKMMap = dynamic(() => import("./MapContent"), {
-  ssr: false, 
+const MapContent = dynamic(() => import("./MapContent"), {
+  ssr: false,
   loading: () => (
     <div className="w-full max-w-5xl mx-auto my-10 h-[500px] flex items-center justify-center rounded-lg bg-gray-100 text-gray-500">
       Loading map...
@@ -11,6 +12,6 @@ const SafeUMKMMap = dynamic(() => import("./MapContent"), {
   ),
 });
 
-export default function UMKMMap() {
-  return <SafeUMKMMap />;
+export default function UMKMMap({ selectedCategory }: { selectedCategory?: string }) {
+  return <MapContent selectedCategory={selectedCategory} />;
 }

@@ -69,7 +69,7 @@ export default function HomeCard({ item }: { item: Umkm }) {
         {/* price */}
         <div className="mt-3">
 
-          <div className="mt-1 text-lg md:text-base font-extrabold text-gray-900">
+          <div className="mt-1 text-lg md:text-base font-md text-gray-900">
             {item.priceRange ?? "Harga bervariasi"}
           </div>
 
@@ -81,7 +81,7 @@ export default function HomeCard({ item }: { item: Umkm }) {
             href={item.mapsUrl ?? "#"}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 border px-3 py-1 rounded text-xs text-gray-700 hover:bg-gray-50"
+            className="inline-flex items-center gap-2 px-3 py-1 rounded text-xs hover:bg-[#3e607d] bg-[#204564] transition-colors text-white"
           >
             Lokasi
           </a>

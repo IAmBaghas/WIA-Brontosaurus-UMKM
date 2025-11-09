@@ -49,10 +49,10 @@ export default function HomePage() {
     <main className="bg-white">
       <section className="flex flex-col items-center justify-center text-center py-16 bg-white">
         {/* Headline */}
-        <h1 className="text-4xl font-bold text-gray-800 mb-2">Mau cari UMKM?</h1>
+        <h1 className="text-4xl font-bold text-gray-800 mb-2">Temukan UMKM di Sekitarmu</h1>
 
         {/* Subtext */}
-        <p className="text-gray-500 mb-8">Dapatkan informasinya dan temukan UMKM terbaik di sekitarmu.</p>
+        <p className="text-gray-500 mb-8">Dukung UMKM Lokal di Lingkungan Kampusmu</p>
 
         {/* Search bar */}
         <div className="flex items-center bg-white shadow-md rounded-lg overflow-hidden border border-gray-200 w-full max-w-xl">
@@ -80,35 +80,33 @@ export default function HomePage() {
 
       {/* UMKM Map */}
       <section className="container mx-auto px-4">
-        <UMKMMap />
+        <UMKMMap selectedCategory={selectedCategory}  />
       </section>
 
       {/* Category */}
-      <section className="container mx-auto px-4 py-8 max-w-5xl">
+      <section className="container mx-auto px-4 pb-2 max-w-5xl">
         <div className="mb-6">
-          <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap", gap: 1 }}>
+          <div className="flex flex-wrap gap-2">
             {categories.map((cat) => {
               const isActive = selectedCategory === cat;
               return (
-                <Button
+                <a
                   key={cat}
-                  variant={isActive ? "solid" : "outlined"}
-                  color={isActive ? "primary" : "neutral"}
-                  size="sm"
-                  disabled={loading}
-                  onClick={() => setSelectedCategory(cat)}
-                  sx={{
-                    textTransform: "none",
-                    borderRadius: 2,
-                    px: 2,
-                    py: 0.5,
-                  }}
+                  onClick={() => !loading && setSelectedCategory(cat)}
+                  className={`inline-flex items-center gap-2 px-3 py-1 rounded text-sm font-medium transition-colors cursor-pointer select-none
+                    ${
+                      isActive
+                        ? "bg-[#204564] text-white hover:bg-[#3e607d]"
+                        : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
+                    }
+                    ${loading ? "opacity-50 pointer-events-none" : ""}
+                  `}
                 >
                   {cat}
-                </Button>
+                </a>
               );
             })}
-          </Stack>
+          </div>
         </div>
 
         <div
@@ -119,12 +117,15 @@ export default function HomePage() {
           {loading
             ? Array.from({ length: 4 }).map((_, i) => <HomeCardSkeleton key={i} />)
             : displayed.length === 0 ? (
-                <div className="col-span-full text-gray-500">Tidak ada UMKM untuk kategori ini.</div>
+                <div className="col-span-full text-gray-500">
+                  Tidak ada UMKM untuk kategori ini.
+                </div>
               ) : (
                 displayed.map((item) => <HomeCard key={item.id} item={item} />)
               )}
         </div>
       </section>
+
     </main>
   );
 }

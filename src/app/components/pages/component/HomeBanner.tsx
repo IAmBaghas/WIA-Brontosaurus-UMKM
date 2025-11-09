@@ -127,7 +127,7 @@ export default function HomeBanner({
       <button
         onClick={goPrev}
         aria-label="Previous banner"
-        className="absolute left-[-50px] top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-700 rounded-full p-2 shadow-md"
+        className="absolute left-[-50px] top-1/2 -translate-y-1/2 bg-white/90 hover:bg-gray-100/90 transition-colors text-gray-700 rounded-full p-2 shadow-md"
         style={{ backdropFilter: "blur(4px)" }}
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -139,7 +139,7 @@ export default function HomeBanner({
       <button
         onClick={goNext}
         aria-label="Next banner"
-        className="absolute right-[-50px] top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-700 rounded-full p-2 shadow-md"
+        className="absolute right-[-50px] top-1/2 -translate-y-1/2 bg-white/90 hover:bg-gray-100/90 transition-colors text-gray-700 rounded-full p-2 shadow-md"
         style={{ backdropFilter: "blur(4px)" }}
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -27,7 +27,7 @@ export function HomeCardSkeleton() {
   );
 }
 
-export default function HomeCard({ item }: { item: Umkm }) {
+export default function HomeCard({ item, onOpenDetails }: { item: Umkm; onOpenDetails?: (id:number)=>void }) {
   const imgSrc = item.gallery?.[0] ?? "/assets/placeholder-card.jpg";
 
   return (
@@ -85,7 +85,17 @@ export default function HomeCard({ item }: { item: Umkm }) {
           >
             Lokasi
           </a>
+
+          <button
+            onClick={() => onOpenDetails?.(item.id)}
+            className="inline-flex items-center gap-2 px-3 py-1 rounded text-xs hover:bg-[#3e607d] bg-[#204564] transition-colors text-white"
+          >
+            Detail
+          </button>
+        
         </div>
+
+        
       </div>
     </article>
   );

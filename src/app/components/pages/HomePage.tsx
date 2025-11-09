@@ -4,10 +4,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import HomeBanner from "./component/HomeBanner";
 import UMKMMap from "./component/UMKMMap";
 import HomeCard, { HomeCardSkeleton } from "./component/HomeCard";
-import umkmData from "@/data/umkmData";
+import UMKMModal from "./component/UMKMModal";
+import umkmData, { Umkm } from "@/data/umkmData";
 import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
-import { Button } from "@mui/joy";
 
 // Universitas Indonesia
 const DEFAULT_CENTER = { lat: -6.365, lng: 106.828 };
@@ -20,8 +20,7 @@ function getDistance(lat1: number, lon1: number, lat2: number, lon2: number): nu
   const Δλ = ((lon2 - lon1) * Math.PI) / 180;
   const a =
     Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-    Math.cos(φ1) * Math.cos(φ2) *
-    Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }
@@ -29,9 +28,12 @@ function getDistance(lat1: number, lon1: number, lat2: number, lon2: number): nu
 export default function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);  
+  const [loading, setLoading] = useState<boolean>(false);
   const [showMoreLoading, setShowMoreLoading] = useState<boolean>(false);
   const [limit, setLimit] = useState<number>(4);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalItem, setModalItem] = useState<Umkm | null>(null);
 
   const categories = useMemo(() => {
     const set = new Set<string>();
@@ -74,6 +76,7 @@ export default function HomePage() {
 
   useEffect(() => {
     setLoading(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const t = window.setTimeout(() => setLoading(false), 600);
     return () => window.clearTimeout(t);
   }, [selectedCategory, selectedPlaceId]);
@@ -85,17 +88,28 @@ export default function HomePage() {
   };
 
   const handleShowMore = () => {
-  if (showMoreLoading) return;
-  setShowMoreLoading(true);
+    if (showMoreLoading) return;
+    setShowMoreLoading(true);
+    setTimeout(() => {
+      setLimit((prev) => prev + 4);
+      setShowMoreLoading(false);
+    }, 800);
+  };
 
-  setTimeout(() => {
-    setLimit((prev) => prev + 4);
-    setShowMoreLoading(false);
-  }, 800);
-};
+  const openModalFor = (id: number) => {
+    const found = umkmData.find((u) => u.id === id);
+    if (found) {
+      setModalItem(found);
+      setModalOpen(true);
+    }
+  };
 
-  const showMoreVisible =
-    !loading && !selectedPlaceId && filteredList.length > displayed.length;
+  const closeModal = () => {
+    setModalOpen(false);
+    setModalItem(null);
+  };
+
+  const showMoreVisible = !loading && !selectedPlaceId && filteredList.length > displayed.length;
 
   return (
     <main className="bg-white">
@@ -128,18 +142,14 @@ export default function HomePage() {
 
       {/* Map */}
       <section className="container mx-auto px-4">
-        <UMKMMap
-          selectedCategory={selectedCategory}
-          displayedData={displayed} 
-          onSelectPlace={(id) => setSelectedPlaceId(id)}
-        />
+        <UMKMMap selectedCategory={selectedCategory} displayedData={displayed} onSelectPlace={(id) => setSelectedPlaceId(id)} />
       </section>
 
       {/* UMKM */}
       <section className="container mx-auto px-4 pb-2 max-w-5xl">
         <div className="flex flex-wrap items-center justify-between mb-6 gap-3">
 
-          {/* Category Dropdown */}
+          {/* Category */}
           <div className="w-48">
             <Select
               size="sm"
@@ -154,12 +164,8 @@ export default function HomePage() {
                 fontSize: "0.875rem",
                 backgroundColor: "white",
                 color: "#204564",
-                "&:hover": {
-                  backgroundColor: "#f9fafb",
-                },
-                "& .MuiSelect-indicator": {
-                  color: "#204564",
-                },
+                "&:hover": { backgroundColor: "#f9fafb" },
+                "& .MuiSelect-indicator": { color: "#204564" },
               }}
             >
               {categories.map((cat) => (
@@ -170,14 +176,8 @@ export default function HomePage() {
                     fontWeight: selectedCategory === cat ? 600 : 500,
                     backgroundColor: selectedCategory === cat ? "#204564" : "white",
                     color: selectedCategory === cat ? "white" : "#204564",
-                    "&:hover": {
-                      backgroundColor: "#204564",
-                      color: "white",
-                    },
-                    "&.Mui-selected": {
-                      backgroundColor: "#204564 !important",
-                      color: "white !important",
-                    },
+                    "&:hover": { backgroundColor: "#204564", color: "white" },
+                    "&.Mui-selected": { backgroundColor: "#204564 !important", color: "white !important" },
                   }}
                 >
                   {cat === "All" ? "Semua" : cat}
@@ -196,41 +196,29 @@ export default function HomePage() {
                 : "bg-[#204564] text-white hover:bg-[#3e607d]"
             }`}
           >
-            {showMoreLoading
-              ? "Memuat..."
-              : filteredList.length <= displayed.length
-              ? "Tidak ada lagi"
-              : "Tampilkan lebih banyak"}
+            {showMoreLoading ? "Memuat..." : filteredList.length <= displayed.length ? "Tidak ada lagi" : "Tampilkan lebih banyak"}
           </button>
         </div>
 
         {/* Cards Grid */}
-        <div
-          className={`grid gap-4 sm:grid-cols-2 lg:grid-cols-4 transition-opacity duration-300 ${
-            loading || showMoreLoading ? "opacity-60" : "opacity-100"
-          }`}
-        >
+        <div className={`grid gap-4 sm:grid-cols-2 lg:grid-cols-4 transition-opacity duration-300 ${loading || showMoreLoading ? "opacity-60" : "opacity-100"}`}>
           {loading ? (
             Array.from({ length: 4 }).map((_, i) => <HomeCardSkeleton key={i} />)
           ) : displayed.length === 0 ? (
-            <div className="col-span-full text-gray-500">
-              Tidak ada UMKM untuk kategori ini.
-            </div>
+            <div className="col-span-full text-gray-500">Tidak ada UMKM untuk kategori ini.</div>
           ) : (
             <>
               {displayed.map((item) => (
-                <HomeCard key={item.id} item={item} />
+                <HomeCard key={item.id} item={item} onOpenDetails={openModalFor} />
               ))}
 
-              {showMoreLoading &&
-                Array.from({ length: 4 }).map((_, i) => (
-                  <HomeCardSkeleton key={`load-${i}`} />
-                ))}
+              {showMoreLoading && Array.from({ length: 4 }).map((_, i) => <HomeCardSkeleton key={`load-${i}`} />)}
             </>
           )}
         </div>
       </section>
 
+      <UMKMModal open={modalOpen} onClose={closeModal} item={modalItem} />
     </main>
   );
 }

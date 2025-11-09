@@ -101,7 +101,7 @@ export default function MapContent({
                 <Popup>
                   <div className="text-sm font-semibold">{place.name}</div>
                   <div className="text-xs text-gray-600">{place.category}</div>
-                  <div className="text-xs mt-1">{place.description}</div>
+                  <div className="text-xs mt-1 text-justify">{place.description}</div>
                   <div className="mt-2 text-xs">{place.address}</div>
                   {place.contact && (
                     <div className="text-xs mt-1 text-gray-500">☎ {place.contact}</div>

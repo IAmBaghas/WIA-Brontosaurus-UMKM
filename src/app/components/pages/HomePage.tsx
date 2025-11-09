@@ -180,7 +180,7 @@ export default function HomePage() {
                     },
                   }}
                 >
-                  {cat === "All" ? "Semua Kategori" : cat}
+                  {cat === "All" ? "Semua" : cat}
                 </Option>
               ))}
             </Select>

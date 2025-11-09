@@ -35,7 +35,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
         </div>
 
         {/* Navigation */}
-        <nav className="space-x-4">
+        {/* <nav className="space-x-4">
           {navItems.map((item) => (
             <Button
               key={item}
@@ -72,7 +72,8 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
               {item}
             </Button>
           ))}
-        </nav>
+        </nav> */}
+
       </div>
     </header>
   )

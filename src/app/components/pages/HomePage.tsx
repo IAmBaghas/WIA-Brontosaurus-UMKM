@@ -4,12 +4,11 @@ import React, { useEffect, useMemo, useState } from "react";
 import HomeBanner from "./component/HomeBanner";
 import UMKMMap from "./component/UMKMMap";
 import HomeCard, { HomeCardSkeleton } from "./component/HomeCard";
-import Button from "@mui/joy/Button";
-import Stack from "@mui/joy/Stack";
 import umkmData from "@/data/umkmData";
 
 export default function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   const categories = useMemo(() => {
@@ -26,6 +25,12 @@ export default function HomePage() {
 
   const displayed = useMemo(() => {
     let list = umkmData.slice();
+
+    if (selectedPlaceId) {
+      const found = list.find((u) => u.id === selectedPlaceId);
+      return found ? [found] : [];
+    }
+
     if (selectedCategory !== "All") {
       const sel = selectedCategory.toLowerCase();
       list = list.filter((u) =>
@@ -36,25 +41,28 @@ export default function HomePage() {
           .includes(sel)
       );
     }
+
     return list.sort((a, b) => (b.id ?? 0) - (a.id ?? 0)).slice(0, 4);
-  }, [selectedCategory]);
+  }, [selectedCategory, selectedPlaceId]);
 
   useEffect(() => {
     setLoading(true);
     const t = window.setTimeout(() => setLoading(false), 600);
     return () => window.clearTimeout(t);
-  }, [selectedCategory]);
+  }, [selectedCategory, selectedPlaceId]);
+
+  const handleCategorySelect = (cat: string) => {
+    setSelectedPlaceId(null);
+    setSelectedCategory(cat);
+  };
 
   return (
     <main className="bg-white">
+      {/* Header */}
       <section className="flex flex-col items-center justify-center text-center py-16 bg-white">
-        {/* Headline */}
         <h1 className="text-4xl font-bold text-gray-800 mb-2">Temukan UMKM di Sekitarmu</h1>
-
-        {/* Subtext */}
         <p className="text-gray-500 mb-8">Dukung UMKM Lokal di Lingkungan Kampusmu</p>
 
-        {/* Search bar */}
         <div className="flex items-center bg-white shadow-md rounded-lg overflow-hidden border border-gray-200 w-full max-w-xl">
           <input
             type="text"
@@ -62,7 +70,10 @@ export default function HomePage() {
             placeholder="Universitas Indonesia"
             className="w-full px-3 py-3 text-gray-400 bg-transparent focus:outline-none cursor-not-allowed"
           />
-          <button disabled className="bg-[#204564] text-white font-semibold px-6 py-3 rounded-r-lg cursor-not-allowed">
+          <button
+            disabled
+            className="bg-[#204564] text-white font-semibold px-6 py-3 rounded-r-lg cursor-not-allowed"
+          >
             Cari
           </button>
         </div>
@@ -80,7 +91,10 @@ export default function HomePage() {
 
       {/* UMKM Map */}
       <section className="container mx-auto px-4">
-        <UMKMMap selectedCategory={selectedCategory}  />
+        <UMKMMap
+          selectedCategory={selectedCategory}
+          onSelectPlace={(id) => setSelectedPlaceId(id)} 
+        />
       </section>
 
       {/* Category */}
@@ -92,7 +106,7 @@ export default function HomePage() {
               return (
                 <a
                   key={cat}
-                  onClick={() => !loading && setSelectedCategory(cat)}
+                  onClick={() => !loading && handleCategorySelect(cat)}
                   className={`inline-flex items-center gap-2 px-3 py-1 rounded text-sm font-medium transition-colors cursor-pointer select-none
                     ${
                       isActive
@@ -106,6 +120,15 @@ export default function HomePage() {
                 </a>
               );
             })}
+            
+            {selectedPlaceId && (
+              <button
+                onClick={() => setSelectedPlaceId(null)}
+                className="ml-2 text-sm text-gray-600 underline hover:text-[#204564]"
+              >
+                Tampilkan Semua
+              </button>
+            )}
           </div>
         </div>
 
@@ -125,7 +148,6 @@ export default function HomePage() {
               )}
         </div>
       </section>
-
     </main>
   );
 }

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useId, useMemo, useRef, useState } from "react";
 import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMapEvent } from "react-leaflet";
 import { Icon } from "leaflet";
 import umkmData from "@/data/umkmData";
 import type { LatLngExpression } from "leaflet";
@@ -15,16 +15,23 @@ const umkmIcon = new Icon({
 
 type Props = {
   selectedCategory?: string;
+  onSelectPlace?: (id: number | null) => void;
 };
 
-export default function MapContent({ selectedCategory }: Props) {
+function MapClickReset({ onReset }: { onReset: () => void }) {
+  useMapEvent("click", () => {
+    onReset();
+  });
+  return null;
+}
+
+export default function MapContent({ selectedCategory, onSelectPlace }: Props) {
   const [mounted, setMounted] = useState(false);
   const uid = useId();
   const mapKey = useMemo(
     () => `umkm-map-${uid}-${Math.random().toString(36).slice(2, 9)}`,
     [uid]
   );
-
   const mapRef = useRef<any | null>(null);
 
   useEffect(() => {
@@ -32,22 +39,24 @@ export default function MapContent({ selectedCategory }: Props) {
   }, []);
 
   const filteredPlaces = useMemo(() => {
-    if (!selectedCategory || selectedCategory === "All") return umkmData.filter(p => p.lat && p.lng);
+    if (!selectedCategory || selectedCategory === "All")
+      return umkmData.filter((p) => p.lat && p.lng);
     const sel = selectedCategory.toLowerCase();
     return umkmData.filter((p) => {
       if (!p.category) return false;
-      return p.category
-        .toLowerCase()
-        .split(",")
-        .map((s) => s.trim())
-        .includes(sel) && p.lat && p.lng;
+      return (
+        p.category
+          .toLowerCase()
+          .split(",")
+          .map((s) => s.trim())
+          .includes(sel) && p.lat && p.lng
+      );
     });
   }, [selectedCategory]);
 
   const bounds = useMemo(() => {
     if (!filteredPlaces || filteredPlaces.length === 0) return null;
-    const pts: LatLngExpression[] = filteredPlaces.map((p) => [p.lat as number, p.lng as number]);
-    return pts;
+    return filteredPlaces.map((p) => [p.lat as number, p.lng as number]);
   }, [filteredPlaces]);
 
   useEffect(() => {
@@ -58,8 +67,12 @@ export default function MapContent({ selectedCategory }: Props) {
         map.setView(bounds[0] as LatLngExpression, 15, { animate: true });
       } else {
         try {
-          map.fitBounds(bounds as LatLngExpression[], { padding: [60, 60], maxZoom: 16, animate: true });
-        } catch (e) {
+          map.fitBounds(bounds as LatLngExpression[], {
+            padding: [60, 60],
+            maxZoom: 16,
+            animate: true,
+          });
+        } catch {
           map.setView(bounds[0] as LatLngExpression, 14, { animate: true });
         }
       }
@@ -88,19 +101,30 @@ export default function MapContent({ selectedCategory }: Props) {
           mapRef.current = mapInstance;
         }}
       >
+        <MapClickReset onReset={() => onSelectPlace?.(null)} />
+
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
         {filteredPlaces.map((place) => (
-          <Marker key={place.id} position={[place.lat as number, place.lng as number]} icon={umkmIcon}>
+          <Marker
+            key={place.id}
+            position={[place.lat as number, place.lng as number]}
+            icon={umkmIcon}
+            eventHandlers={{
+              click: () => onSelectPlace?.(place.id),
+            }}
+          >
             <Popup>
               <div className="text-sm font-semibold">{place.name}</div>
               <div className="text-xs text-gray-600">{place.category}</div>
               <div className="text-xs mt-1">{place.description}</div>
               <div className="mt-2 text-xs">{place.address}</div>
-              {place.contact && <div className="text-xs mt-1 text-gray-500">☎ {place.contact}</div>}
+              {place.contact && (
+                <div className="text-xs mt-1 text-gray-500">☎ {place.contact}</div>
+              )}
             </Popup>
           </Marker>
         ))}

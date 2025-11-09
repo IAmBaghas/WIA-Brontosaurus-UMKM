@@ -12,6 +12,12 @@ const MapContent = dynamic(() => import("./MapContent"), {
   ),
 });
 
-export default function UMKMMap({ selectedCategory }: { selectedCategory?: string }) {
-  return <MapContent selectedCategory={selectedCategory} />;
+export default function UMKMMap({
+  selectedCategory,
+  onSelectPlace,
+}: {
+  selectedCategory?: string;
+  onSelectPlace?: (id: number) => void;
+}) {
+  return <MapContent selectedCategory={selectedCategory} onSelectPlace={onSelectPlace} />;
 }

@@ -19,7 +19,7 @@ export const umkmData: Umkm[] = [
   {
     id: 1,
     name: "Mie Ayam Yamien Sengketa",
-    category: "Makanan",
+    category: "Kuliner",
     description:
       "Sebuah kedai mie ayam legendaris yang menjadi favorit di kalangan mahasiswa Universitas Indonesia (UI). Terkenal dengan harganya yang terjangkau dan lokasinya yang strategis di dekat area Kukusan Teknik (KuTek).",
     address: "Jl. Mandor Goweng, Kukusan, Beji, Depok, Jawa Barat 16425",
@@ -33,7 +33,7 @@ export const umkmData: Umkm[] = [
   {
     id: 2,
     name: "Tens Coffee (Kantin Vokasi UI)",
-    category: "Minuman, Makanan, Dessert",
+    category: "Kuliner",
     description:
       "Kedai kopi di kantin Vokasi UI yang menyajikan kopi dan es krim. Tempat nyaman bagi komunitas pelajar untuk berkumpul.",
     address:
@@ -49,7 +49,7 @@ export const umkmData: Umkm[] = [
   {
     id: 3,
     name: "Cho Ramen",
-    category: "Makanan (Ramen)",
+    category: "Kuliner",
     description:
       "Kedai ramen di kawasan Kukusan, menyajikan menu andalan seperti Tori Paitan dan Chilli Oil Ramen.",
     address: "Jl. H. Amat I No.26, Kukusan, Beji, Depok, Jawa Barat 16425",
@@ -57,12 +57,12 @@ export const umkmData: Umkm[] = [
     lng: 106.82189382883638,
     mapsUrl: "https://share.google/82o4gOMEQEIEtqd2K",
     hours: "Setiap hari 11:00–22:00",
-    priceRange: "Sekitar Rp 32.500 - Rp 45.000",
+    priceRange: "Rp 32.500 - Rp 45.000",
   },
   {
     id: 4,
     name: "Tiga Centong Bubur",
-    category: "Makanan (Bubur)",
+    category: "Kuliner",
     description:
       "Kedai bubur Kanton yang halal dan terjangkau di kawasan Kukusan, Depok.",
     address: "Jl. Palakali No.1, Kukusan, Beji, Depok",
@@ -74,23 +74,8 @@ export const umkmData: Umkm[] = [
   },
   {
     id: 5,
-    name: "Ayam Cabe Ijo Mas Hendy",
-    category: "Masakan Indonesia",
-    description:
-      "Spesialis ayam goreng dengan sambal cabe ijo, menawarkan free refill nasi dan es teh manis pada beberapa layanan.",
-    address: "Jl. H. Asmawi, Beji, Depok",
-    lat: -6.3783974856959995, 
-    lng: 106.81395942554701,
-    mapsUrl: "https://share.google/r4S96CBZkfi88HkJt",
-    hours:
-      "Senin 11:00–21:30; Selasa–Kamis 10:00–21:30; Jumat–Minggu 11:00–22:00 (per sumber, verifikasi diperlukan)",
-    priceRange: "Rp 25.000 - Rp 34.000",
-    socials: "Instagram: @ayammashendy",
-  },
-  {
-    id: 6,
     name: "BannaWash Laundry Express (Beji)",
-    category: "Jasa (Laundry)",
+    category: "Jasa",
     description:
       "Jasa laundry kiloan dengan pilihan reguler, express, dan kilat; melayani cuci satuan (selimut, sepatu).",
     address: "Jl. M.H. Sanim No.8A, RW.07, Kukusan, Beji, Depok, Jawa Barat 16425",
@@ -99,13 +84,13 @@ export const umkmData: Umkm[] = [
     mapsUrl: "https://share.google/lMYJJi0oPeXVvQaap",
     hours: "Senin–Minggu 08:00–18:00",
     contact: "0812-1084-1922",
-    priceRange: "Mulai Rp 7.000/kg (reguler) hingga Rp 17.000/kg (kilat)",
+    priceRange: "Rp 7.000 - Rp 17.000",
     socials: "Instagram: @bannawash",
   },
   {
-    id: 7,
+    id: 6,
     name: "Pangkas Rambut Erwin",
-    category: "Jasa (Barbershop)",
+    category: "Jasa",
     description:
       "Barbershop lokal di area Pondok Cina, menyediakan layanan potong rambut pria.",
     address: "Jl. Mawar Raya No.8, Pondok Cina, Beji, Depok, Jawa Barat 16424",
@@ -117,9 +102,9 @@ export const umkmData: Umkm[] = [
     priceRange: "Rp 5.000 - Rp 25.000",
   },
   {
-    id: 8,
+    id: 7,
     name: "Ridwan Fotocopy & Digital Printing",
-    category: "Jasa (Fotocopy / Digital Printing)",
+    category: "Jasa",
     description:
       "Percetakan dan layanan fotokopi serta jilid dekat kawasan Akses UI/Tugu Cimanggis (verifikasi jam buka disarankan).",
     address: "Jl. Akses UI No.26C, Tugu, Cimanggis, Depok, Jawa Barat 16451",
@@ -130,9 +115,9 @@ export const umkmData: Umkm[] = [
     hours: "Jam operasional bervariasi — beberapa sumber mengatakan buka 24 jam, verifikasi di lokasi disarankan.",
   },
   {
-    id: 9,
+    id: 8,
     name: "Rumah Benang Depok",
-    category: "Jasa (Jahit / Pembuatan Baju)",
+    category: "Jasa",
     description:
       "Layanan jahit dan pembuatan baju kustom sesuai kebutuhan pelanggan.",
     address: "Jl HM Ahmad Tohir (Jl Kapuk) dekat Masjid Alhidayah, Pondok Cina, Beji, Depok",
@@ -144,9 +129,9 @@ export const umkmData: Umkm[] = [
     socials: "Instagram: @rumah.benang",
   },
   {
-    id: 10,
+    id: 9,
     name: "Bengkel Motor KJM (Kifli Jaya Motor)",
-    category: "Jasa (Bengkel Motor)",
+    category: "Jasa",
     description:
       "Bengkel motor lokal yang menyediakan servis umum, ganti oli, dan perbaikan motor.",
     address: "Jl. Rawa Maya III, Beji, Depok, Jawa Barat 16421",
@@ -156,6 +141,21 @@ export const umkmData: Umkm[] = [
     hours:
       "Senin–Minggu jam bervariasi (contoh: 09:00–20:00 pada beberapa hari) — verifikasi di lokasi disarankan",
     contact: "0818-0473-5034",
+  },
+  {
+    id: 10,
+    name: "Ayam Cabe Ijo Mas Hendy",
+    category: "Kuliner",
+    description:
+      "Spesialis ayam goreng dengan sambal cabe ijo, menawarkan free refill nasi dan es teh manis pada beberapa layanan.",
+    address: "Jl. H. Asmawi, Beji, Depok",
+    lat: -6.3783974856959995, 
+    lng: 106.81395942554701,
+    mapsUrl: "https://share.google/r4S96CBZkfi88HkJt",
+    hours:
+      "Senin 11:00–21:30; Selasa–Kamis 10:00–21:30; Jumat–Minggu 11:00–22:00 (per sumber, verifikasi diperlukan)",
+    priceRange: "Rp 25.000 - Rp 34.000",
+    socials: "Instagram: @ayammashendy",
   },
 ];
 

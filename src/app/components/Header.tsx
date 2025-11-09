@@ -14,7 +14,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
   const navItems = ["Beranda", "Jelajah", "Tentang"]
 
   return (
-    <header className="w-full bg-[#204564] text-white shadow-md">
+    <header className="w-full bg-[#204564] text-white shadow-md sticky top-0 z-9999">
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
 
         {/* Logo */}

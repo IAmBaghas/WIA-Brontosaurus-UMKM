@@ -70,7 +70,7 @@ export default function HomeCard({ item, onOpenDetails }: { item: Umkm; onOpenDe
         <div className="mt-3">
 
           <div className="mt-1 text-lg md:text-base font-md text-gray-900">
-            {item.priceRange ?? "Harga bervariasi"}
+            {item.priceRange ?? item.priceRange === 0 ? item.priceRange : "Harga bervariasi"}
           </div>
 
         </div>

@@ -2,7 +2,30 @@
 
 import React from "react";
 import Image from "next/image";
+import { Skeleton } from "@mui/joy";
 import type { Umkm } from "@/data/umkmData";
+
+export function HomeCardSkeleton() {
+  return (
+    <article className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition-shadow">
+      <div className="relative w-full h-44 md:h-40 lg:h-44 bg-gray-100">
+        <Skeleton variant="rectangular" width="100%" height="100%" />
+      </div>
+
+      <div className="p-3 space-y-2">
+        <Skeleton variant="text" width="70%" height={20} />
+        <Skeleton variant="text" width="90%" height={16} />
+        <Skeleton variant="text" width="60%" height={16} />
+        <div className="pt-3">
+          <Skeleton variant="text" width="50%" height={20} />
+        </div>
+        <div className="pt-3">
+          <Skeleton variant="rectangular" width={60} height={24} />
+        </div>
+      </div>
+    </article>
+  );
+}
 
 export default function HomeCard({ item }: { item: Umkm }) {
   const imgSrc = item.gallery?.[0] ?? "/assets/placeholder-card.jpg";

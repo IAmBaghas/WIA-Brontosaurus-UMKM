@@ -123,7 +123,7 @@ export default function HomeBanner({
         </div>
       </div>
 
-    {/* Button Kiri */}
+    {/* Button L */}
       <button
         onClick={goPrev}
         aria-label="Previous banner"
@@ -135,7 +135,7 @@ export default function HomeBanner({
         </svg>
       </button>
 
-    {/* Button Kanan */}
+    {/* Button R */}
       <button
         onClick={goNext}
         aria-label="Next banner"
@@ -147,7 +147,7 @@ export default function HomeBanner({
         </svg>
       </button>
 
-    {/* Bar Indikator */}
+    {/* Indicator Bar */}
       <div className="flex justify-center gap-2 mt-3">
         {banners.map((b, i) => (
           <button

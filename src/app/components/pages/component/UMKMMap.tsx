@@ -2,7 +2,6 @@
 
 import dynamic from "next/dynamic";
 
-// dynamically import the real map — only runs in the browser
 const SafeUMKMMap = dynamic(() => import("./MapContent"), {
   ssr: false, 
   loading: () => (

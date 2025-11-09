@@ -1,21 +1,25 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import HomeBanner from "./component/HomeBanner";
 import UMKMMap from "./component/UMKMMap";
-import HomeCard from "./component/HomeCard"; 
+import HomeCard, { HomeCardSkeleton } from "./component/HomeCard";
 import Button from "@mui/joy/Button";
 import Stack from "@mui/joy/Stack";
-import umkmData from "@/data/umkmData"; 
+import umkmData from "@/data/umkmData";
 
 export default function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const categories = useMemo(() => {
     const set = new Set<string>();
     umkmData.forEach((u) => {
       if (!u.category) return;
-      u.category.split(",").map((s) => s.trim()).forEach((c) => set.add(c));
+      u.category
+        .split(",")
+        .map((s) => s.trim())
+        .forEach((c) => set.add(c));
     });
     return ["All", ...Array.from(set)];
   }, []);
@@ -33,6 +37,12 @@ export default function HomePage() {
       );
     }
     return list.sort((a, b) => (b.id ?? 0) - (a.id ?? 0)).slice(0, 4);
+  }, [selectedCategory]);
+
+  useEffect(() => {
+    setLoading(true);
+    const t = window.setTimeout(() => setLoading(false), 600);
+    return () => window.clearTimeout(t);
   }, [selectedCategory]);
 
   return (
@@ -85,6 +95,7 @@ export default function HomePage() {
                   variant={isActive ? "solid" : "outlined"}
                   color={isActive ? "primary" : "neutral"}
                   size="sm"
+                  disabled={loading}
                   onClick={() => setSelectedCategory(cat)}
                   sx={{
                     textTransform: "none",
@@ -100,12 +111,18 @@ export default function HomePage() {
           </Stack>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {displayed.length === 0 ? (
-            <div className="col-span-full text-gray-500">Tidak ada UMKM untuk kategori ini.</div>
-          ) : (
-            displayed.map((item) => <HomeCard key={item.id} item={item} />)
-          )}
+        <div
+          className={`grid gap-4 sm:grid-cols-2 lg:grid-cols-4 transition-opacity duration-300 ${
+            loading ? "opacity-60" : "opacity-100"
+          }`}
+        >
+          {loading
+            ? Array.from({ length: 4 }).map((_, i) => <HomeCardSkeleton key={i} />)
+            : displayed.length === 0 ? (
+                <div className="col-span-full text-gray-500">Tidak ada UMKM untuk kategori ini.</div>
+              ) : (
+                displayed.map((item) => <HomeCard key={item.id} item={item} />)
+              )}
         </div>
       </section>
     </main>

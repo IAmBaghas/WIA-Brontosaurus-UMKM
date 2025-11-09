@@ -1,4 +1,6 @@
 import "./globals.css"
+import "leaflet/dist/leaflet.css";
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 
 export const metadata = {
   title: "My App",

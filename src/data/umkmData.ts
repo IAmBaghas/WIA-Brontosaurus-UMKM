@@ -1,0 +1,162 @@
+// src/data/umkmData.ts
+export type Umkm = {
+  id: number;
+  name: string;
+  category: string;
+  description?: string;
+  address?: string;
+  lat?: number; 
+  lng?: number; 
+  mapsUrl?: string;
+  gallery?: string[]; 
+  hours?: string;
+  contact?: string;
+  priceRange?: string;
+  socials?: string;
+};
+
+export const umkmData: Umkm[] = [
+  {
+    id: 1,
+    name: "Mie Ayam Yamien Sengketa",
+    category: "Makanan",
+    description:
+      "Sebuah kedai mie ayam legendaris yang menjadi favorit di kalangan mahasiswa Universitas Indonesia (UI). Terkenal dengan harganya yang terjangkau dan lokasinya yang strategis di dekat area Kukusan Teknik (KuTek).",
+    address: "Jl. Mandor Goweng, Kukusan, Beji, Depok, Jawa Barat 16425",
+    lat: -6.36290050588272,
+    lng: 106.8216003865092,
+    mapsUrl: "https://share.google/0FyLvS3UQItdAndtZ",
+    hours: "Senin–Sabtu 09:00–20:00",
+    contact: "0856-9339-3818",
+    priceRange: "Rp 25.000 - Rp 50.000",
+  },
+  {
+    id: 2,
+    name: "Tens Coffee (Kantin Vokasi UI)",
+    category: "Minuman, Makanan, Dessert",
+    description:
+      "Kedai kopi di kantin Vokasi UI yang menyajikan kopi dan es krim. Tempat nyaman bagi komunitas pelajar untuk berkumpul.",
+    address:
+      "Kantin Vokasi, Gedung VA, Program Pendidikan Vokasi Universitas Indonesia, Kampus UI Depok, Depok, Jawa Barat 16426",
+    lat: -6.368533328301433, 
+    lng: 106.82152811349083,
+    mapsUrl: "https://share.google/KDk3rdesqeDrls98Q",
+    hours: "Senin–Sabtu 08:00–17:00 (Minggu tutup)",
+    contact: "0813-1657-9733",
+    priceRange: "Rp 15.000 - Rp 28.000",
+    socials: "Instagram: @tenscoffeeid, TikTok: @tenscoffeeid",
+  },
+  {
+    id: 3,
+    name: "Cho Ramen",
+    category: "Makanan (Ramen)",
+    description:
+      "Kedai ramen di kawasan Kukusan, menyajikan menu andalan seperti Tori Paitan dan Chilli Oil Ramen.",
+    address: "Jl. H. Amat I No.26, Kukusan, Beji, Depok, Jawa Barat 16425",
+    lat: -6.362301262508761, 
+    lng: 106.82189382883638,
+    mapsUrl: "https://share.google/82o4gOMEQEIEtqd2K",
+    hours: "Setiap hari 11:00–22:00",
+    priceRange: "Sekitar Rp 32.500 - Rp 45.000",
+  },
+  {
+    id: 4,
+    name: "Tiga Centong Bubur",
+    category: "Makanan (Bubur)",
+    description:
+      "Kedai bubur Kanton yang halal dan terjangkau di kawasan Kukusan, Depok.",
+    address: "Jl. Palakali No.1, Kukusan, Beji, Depok",
+    lat: -6.369460768248786,
+    lng:  106.81561344067235,
+    mapsUrl: "https://share.google/dGEpFcwsFqJGMJxYI",
+    hours: "Setiap hari 07:00–22:00",
+    contact: "0895-0786-7823",
+  },
+  {
+    id: 5,
+    name: "Ayam Cabe Ijo Mas Hendy",
+    category: "Masakan Indonesia",
+    description:
+      "Spesialis ayam goreng dengan sambal cabe ijo, menawarkan free refill nasi dan es teh manis pada beberapa layanan.",
+    address: "Jl. H. Asmawi, Beji, Depok",
+    lat: -6.3783974856959995, 
+    lng: 106.81395942554701,
+    mapsUrl: "https://share.google/r4S96CBZkfi88HkJt",
+    hours:
+      "Senin 11:00–21:30; Selasa–Kamis 10:00–21:30; Jumat–Minggu 11:00–22:00 (per sumber, verifikasi diperlukan)",
+    priceRange: "Rp 25.000 - Rp 34.000",
+    socials: "Instagram: @ayammashendy",
+  },
+  {
+    id: 6,
+    name: "BannaWash Laundry Express (Beji)",
+    category: "Jasa (Laundry)",
+    description:
+      "Jasa laundry kiloan dengan pilihan reguler, express, dan kilat; melayani cuci satuan (selimut, sepatu).",
+    address: "Jl. M.H. Sanim No.8A, RW.07, Kukusan, Beji, Depok, Jawa Barat 16425",
+    lat: -6.371417705091318,
+    lng: 106.81623247116359,
+    mapsUrl: "https://share.google/lMYJJi0oPeXVvQaap",
+    hours: "Senin–Minggu 08:00–18:00",
+    contact: "0812-1084-1922",
+    priceRange: "Mulai Rp 7.000/kg (reguler) hingga Rp 17.000/kg (kilat)",
+    socials: "Instagram: @bannawash",
+  },
+  {
+    id: 7,
+    name: "Pangkas Rambut Erwin",
+    category: "Jasa (Barbershop)",
+    description:
+      "Barbershop lokal di area Pondok Cina, menyediakan layanan potong rambut pria.",
+    address: "Jl. Mawar Raya No.8, Pondok Cina, Beji, Depok, Jawa Barat 16424",
+    lat:-6.361565601511289, 
+    lng: 106.83559546930888,
+    mapsUrl: "https://share.google/JD04USyaIL9d8q8wG",
+    hours: "Senin–Kamis 10:00–22:00; Sabtu–Minggu 10:00–23:00; Jumat tutup (verifikasi diperlukan)",
+    contact: "0857-1325-9120",
+    priceRange: "Rp 5.000 - Rp 25.000",
+  },
+  {
+    id: 8,
+    name: "Ridwan Fotocopy & Digital Printing",
+    category: "Jasa (Fotocopy / Digital Printing)",
+    description:
+      "Percetakan dan layanan fotokopi serta jilid dekat kawasan Akses UI/Tugu Cimanggis (verifikasi jam buka disarankan).",
+    address: "Jl. Akses UI No.26C, Tugu, Cimanggis, Depok, Jawa Barat 16451",
+    lat: -6.3549307765460785, 
+    lng: 106.84173467116361,
+    mapsUrl: "https://share.google/xBTKOQXPGOb3dkum0",
+    contact: "0815-9884-803",
+    hours: "Jam operasional bervariasi — beberapa sumber mengatakan buka 24 jam, verifikasi di lokasi disarankan.",
+  },
+  {
+    id: 9,
+    name: "Rumah Benang Depok",
+    category: "Jasa (Jahit / Pembuatan Baju)",
+    description:
+      "Layanan jahit dan pembuatan baju kustom sesuai kebutuhan pelanggan.",
+    address: "Jl HM Ahmad Tohir (Jl Kapuk) dekat Masjid Alhidayah, Pondok Cina, Beji, Depok",
+    lat: -6.368334677759473, 
+    lng: 106.8385503644186,
+    mapsUrl: "https://share.google/tfGawDXiwrSde0cgM",
+    hours: "Senin–Minggu 07:00–21:00 (per dokumen, verifikasi disarankan)",
+    contact: "0838-9365-3230",
+    socials: "Instagram: @rumah.benang",
+  },
+  {
+    id: 10,
+    name: "Bengkel Motor KJM (Kifli Jaya Motor)",
+    category: "Jasa (Bengkel Motor)",
+    description:
+      "Bengkel motor lokal yang menyediakan servis umum, ganti oli, dan perbaikan motor.",
+    address: "Jl. Rawa Maya III, Beji, Depok, Jawa Barat 16421",
+    lat: -6.38102962812821, 
+    lng: 106.81842850483848,
+    mapsUrl: "https://share.google/E0LjdmaneZiH0Ou1w",
+    hours:
+      "Senin–Minggu jam bervariasi (contoh: 09:00–20:00 pada beberapa hari) — verifikasi di lokasi disarankan",
+    contact: "0818-0473-5034",
+  },
+];
+
+export default umkmData;

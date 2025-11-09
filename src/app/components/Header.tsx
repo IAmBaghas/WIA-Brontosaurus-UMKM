@@ -1,6 +1,9 @@
 "use client"
 
 import Image from "next/image"
+import * as React from 'react';
+import Button from '@mui/joy/Button';
+import Stack from '@mui/material/Stack';
 
 type HeaderProps = {
   currentPage: string
@@ -34,15 +37,40 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
         {/* Navigation */}
         <nav className="space-x-4">
           {navItems.map((item) => (
-            <button
+            <Button
               key={item}
               onClick={() => onNavigate(item)}
-              className={`hover:underline transition ${
-                currentPage === item ? "font-semibold underline" : ""
-              }`}
+              variant="plain"
+              color="neutral"
+              sx={{
+                position: 'relative',
+                px: 1.5,
+                py: 0.5,
+                fontWeight: currentPage === item ? 600 : 500,
+                color: currentPage === item ? 'white' : 'white',
+                textTransform: 'none',
+                '&::after': {
+                  content: '""',
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  width: currentPage === item ? '100%' : '0%',
+                  height: '3px',
+                  backgroundColor: 'white',
+                  borderRadius: '3px',
+                  transition: 'width 0.3s ease',
+                },
+                '&:hover::after': {
+                  width: '100%',
+                },
+                '&:hover': {
+                  backgroundColor: 'transparent',
+                  color: 'white',
+                },
+              }}
             >
               {item}
-            </button>
+            </Button>
           ))}
         </nav>
       </div>

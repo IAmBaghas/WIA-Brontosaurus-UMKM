@@ -8,6 +8,7 @@ import UMKMModal from "./component/UMKMModal";
 import umkmData, { Umkm } from "@/data/umkmData";
 import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
+import Hero from "../Hero";
 
 // Universitas Indonesia
 const DEFAULT_CENTER = { lat: -6.365, lng: 106.828 };
@@ -30,7 +31,7 @@ export default function HomePage() {
   const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [showMoreLoading, setShowMoreLoading] = useState<boolean>(false);
-  const [limit, setLimit] = useState<number>(4);
+  const [limit, setLimit] = useState<number>(3);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalItem, setModalItem] = useState<Umkm | null>(null);
@@ -84,14 +85,14 @@ export default function HomePage() {
   const handleCategorySelect = (cat: string) => {
     setSelectedPlaceId(null);
     setSelectedCategory(cat);
-    setLimit(4);
+    setLimit(3);
   };
 
   const handleShowMore = () => {
     if (showMoreLoading) return;
     setShowMoreLoading(true);
     setTimeout(() => {
-      setLimit((prev) => prev + 4);
+      setLimit((prev) => prev + 3);
       setShowMoreLoading(false);
     }, 800);
   };
@@ -112,24 +113,7 @@ export default function HomePage() {
   const showMoreVisible = !loading && !selectedPlaceId && filteredList.length > displayed.length;
 
   return (
-    <main className="bg-white">
-      <section className="flex flex-col items-center justify-center text-center py-16 bg-white">
-        <h1 className="text-4xl font-bold text-gray-800 mb-2">Temukan UMKM di Sekitarmu</h1>
-        <p className="text-gray-500 mb-8">Dukung UMKM Lokal di Lingkungan Kampusmu</p>
-
-        <div className="flex items-center bg-white shadow-md rounded-lg overflow-hidden border border-gray-200 w-full max-w-xl">
-          <input
-            type="text"
-            disabled
-            placeholder="Universitas Indonesia"
-            className="w-full px-3 py-3 text-gray-400 bg-transparent focus:outline-none cursor-not-allowed"
-          />
-          <button disabled className="bg-[#204564] text-white font-semibold px-6 py-3 rounded-r-lg cursor-not-allowed">
-            Cari
-          </button>
-        </div>
-      </section>
-
+    <main className="">
       {/* Banner */}
       <section className="pb-10">
         <HomeBanner />
@@ -137,7 +121,7 @@ export default function HomePage() {
 
       {/* Title */}
       <section className="container mx-auto py-8 max-w-5xl">
-        <h2 className="text-2xl font-semibold mb-[-30px]">UMKM Terdekat</h2>
+        <h2 className="text-2xl font-semibold mb-[-30px] text-[#133149]">UMKM Terdekat</h2>
       </section>
 
       {/* Map */}
@@ -201,9 +185,9 @@ export default function HomePage() {
         </div>
 
         {/* Cards Grid */}
-        <div className={`grid gap-4 sm:grid-cols-2 lg:grid-cols-4 transition-opacity duration-300 ${loading || showMoreLoading ? "opacity-60" : "opacity-100"}`}>
+        <div className={`grid gap-4 sm:grid-cols-2 lg:grid-cols-3 transition-opacity duration-300 ${loading || showMoreLoading ? "opacity-60" : "opacity-100"}`}>
           {loading ? (
-            Array.from({ length: 4 }).map((_, i) => <HomeCardSkeleton key={i} />)
+            Array.from({ length: 3 }).map((_, i) => <HomeCardSkeleton key={i} />)
           ) : displayed.length === 0 ? (
             <div className="col-span-full text-gray-500">Tidak ada UMKM untuk kategori ini.</div>
           ) : (
@@ -212,7 +196,7 @@ export default function HomePage() {
                 <HomeCard key={item.id} item={item} onOpenDetails={openModalFor} />
               ))}
 
-              {showMoreLoading && Array.from({ length: 4 }).map((_, i) => <HomeCardSkeleton key={`load-${i}`} />)}
+              {showMoreLoading && Array.from({ length: 3 }).map((_, i) => <HomeCardSkeleton key={`load-${i}`} />)}
             </>
           )}
         </div>

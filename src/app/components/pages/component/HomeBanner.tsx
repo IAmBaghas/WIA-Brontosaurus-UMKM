@@ -113,7 +113,7 @@ export default function HomeBanner({
               />
 
               {/* Text overlay, comment if not needed */}
-              <div className="absolute left-6 top-1/2 transform -translate-y-1/2 text-left text-white drop-shadow-lg pointer-events-none">
+              <div className="absolute left-6 top-1/2 transform -translate-y-1/2 text-left text-[#133149] drop-shadow-lg pointer-events-none">
                 {b.title && <h3 className="text-xl md:text-2xl font-bold">{b.title}</h3>}
                 {b.subtitle && <p className="text-sm md:text-base mt-1">{b.subtitle}</p>}
               </div>
